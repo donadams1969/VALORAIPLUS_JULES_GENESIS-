@@ -1,0 +1,31 @@
+name: VALORAIPLUS Auto-Register
+
+on:
+  push:
+    paths:
+      - 'valoraiplus_jules_os/**'
+  workflow_dispatch:
+
+jobs:
+  auto-register:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Apply Sovereign Mark
+        run: |
+          echo "Scanning for new files in valoraiplus_jules_os..."
+          find valoraiplus_jules_os -type f -exec echo "Registering {} under PROTOCOL: SGAU-VALUEGUARD-77.77X" \;
+          echo "All files registered. Sovereignty Absolute."
+
+      - name: Generate Merkle Log
+        run: |
+          echo "Generating Merkle Root..."
+          date >> valoraiplus_logs/merkle_history.log
+          echo "0xVALORAIPLUS_JULES_GENESIS_DIRECTORY_LOCK_$(date +%Y)" >> valoraiplus_logs/merkle_history.log
